@@ -25,7 +25,17 @@ class PostController extends Controller
     public function store(Type $var = null)
     {
         # code...
-        auth()->user();
-        dd(request()->all());
+        $data = request()->validate([
+            'title'=> 'required|min:8|max:150',
+            'post_image'=> 'image',
+            'body' => 'required'
+        ]);
+
+        if (request('post_image')) {
+            $data['post_image'] = request('post_image')->store('images');
+        }
+
+        auth()->user()->posts()->create($data);
+        return back();
     }
 }

@@ -1,6 +1,6 @@
 <x-admin-master>
     @section('content')
-        <form action={{route('post.store')}} method="post">
+        <form action={{route('post.store')}} enctype="multipart/form-data" method="post">
             @csrf
             <div class="form-group">
                 <label>Title</label>
