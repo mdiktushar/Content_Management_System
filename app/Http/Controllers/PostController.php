@@ -38,4 +38,10 @@ class PostController extends Controller
         auth()->user()->posts()->create($data);
         return back();
     }
+
+    public function index(Type $var = null)
+    {
+        # code...
+        return view('admin.posts.index');
+    }
 }
