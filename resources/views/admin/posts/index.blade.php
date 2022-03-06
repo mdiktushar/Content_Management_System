@@ -2,7 +2,16 @@
     @section('content')
     <!-- DataTales Example -->
     <div class="container-fluid">
-         <h1 class="h3 mb-0 text-gray-800">All Posts</h1>
+      @if(Session::has('delete_message'))
+        <div class = 'alert alert-danger'>
+          {{Session::get('delete_message')}}
+        </div>
+      @elseif (session('post_save'))
+      <div class = 'alert alert-success'>
+        {{session('post_save')}}
+      </div>
+      @endif
+      <h1 class="h3 mb-0 text-gray-800">All Posts</h1>
     <div class="card shadow mb-4">
        
         <div class="card-header py-3">
@@ -19,6 +28,7 @@
                   <th>Image</th>
                   <th>Create At</th>
                   <th>Updated At</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tfoot>
@@ -29,19 +39,27 @@
                   <th>Image</th>
                   <th>Create At</th>
                   <th>Updated At</th>
+                  <th>Delete</th>
                 </tr>
               </tfoot>
               <tbody>
                 @foreach ($posts as $post)
                 <tr>
-                <td>{{$post->id}}</td>
-                <td>{{$post->user->name}}</td>
-                <td>{{$post->title}}</td>
-                <td>
+                  <td>{{$post->id}}</td>
+                  <td>{{$post->user->name}}</td>
+                  <td>{{$post->title}}</td>
+                  <td>
                     <img height="40px" src="{{$post->post_image}}" alt="{{$post->title.' Image'}}" srcset="">
-                </td>
-                <td>{{$post->created_at->diffForHumans()}}</td>
-                <td>{{$post->updated_at->diffForHumans()}}</td>
+                  </td>
+                  <td>{{$post->created_at->diffForHumans()}}</td>
+                  <td>{{$post->updated_at->diffForHumans()}}</td>
+                  <td>
+                    <form action={{route('post.distroy', $post->id)}} enctype="multipart/form-data" method="post">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                  </td>
                 </tr>
                 @endforeach
               </tbody>

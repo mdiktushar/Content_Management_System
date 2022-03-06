@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 // Models
 use App\Models\Post;
 
+//Vendor
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class PostController extends Controller
 {
@@ -22,7 +24,7 @@ class PostController extends Controller
         return view('admin.posts.create');
     }
     
-    public function store(Type $var = null)
+    public function store(Request $request)
     {
         # code...
         $data = request()->validate([
@@ -36,7 +38,9 @@ class PostController extends Controller
         }
 
         auth()->user()->posts()->create($data);
-        return back();
+        $request->session()->flash('post_save', "A New Post is Created");
+        
+        return redirect()->route('post.index');
     }
 
     public function index(Type $var = null)
@@ -44,5 +48,13 @@ class PostController extends Controller
         # code...
         $posts = Post::all();
         return view('admin.posts.index', ['posts'=> $posts]);
+    }
+
+    public function distroy(Post $post)
+    {
+        # code...
+        $post->delete();
+        Session::flash('delete_message', 'Post is deleted');
+        return back();
     }
 }
