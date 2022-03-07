@@ -27,6 +27,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         # code...
+        $this->authorize('create', Post::class);
         $data = request()->validate([
             'title'=> 'required|min:8|max:150',
             'post_image'=> 'image',
@@ -46,13 +47,15 @@ class PostController extends Controller
     public function index(Type $var = null)
     {
         # code...
-        $posts = Post::all();
+        $posts= auth()->user()->posts()->paginate(5);
+        // $posts = Post::all()->paginate();
         return view('admin.posts.index', ['posts'=> $posts]);
     }
 
     public function distroy(Post $post)
     {
         # code...
+        $this->authorize('delete', $post);
         $post->delete();
         Session::flash('delete_message', 'Post is deleted');
         return back();
@@ -61,6 +64,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         # code...
+        $this->authorize('view', $post);
         return view('admin.posts.edit', ['post' => $post]);
     }
 
@@ -80,6 +84,8 @@ class PostController extends Controller
 
         $post->title = $data['title'];
         $post->body = $data['body'];
+
+        $this->authorize('update', $post);
 
         // auth()->user()->posts()->save($post);
         $post->save();

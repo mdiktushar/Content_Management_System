@@ -44,21 +44,37 @@
               </tfoot>
               <tbody>
                 @foreach ($posts as $post)
+                @php
+                  $showTitle = true;
+                @endphp
                 <tr>
                   <td>{{$post->id}}</td>
                   <td>{{$post->user->name}}</td>
-                  <td><a href={{route('post.edit', $post->id)}}>{{$post->title}}</a></td>
+                  <td>
+                    @can('view', $post)
+                      <a href={{route('post.edit', $post->id)}}>{{$post->title}}</a>
+                      @php
+                        $showTitle = false;
+                      @endphp
+                    @endcan
+                    @if ($showTitle)
+                      {{$post->title}}
+                    @endif
+                  </td>
                   <td>
                     <img height="40px" src="{{$post->post_image}}" alt="{{$post->title.' Image'}}" srcset="">
                   </td>
                   <td>{{$post->created_at->diffForHumans()}}</td>
                   <td>{{$post->updated_at->diffForHumans()}}</td>
                   <td>
-                    <form action={{route('post.distroy', $post->id)}} enctype="multipart/form-data" method="post">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
+                    @can('view', $post)
+                      <form action={{route('post.distroy', $post->id)}} enctype="multipart/form-data" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                      </form>
+                    @endcan
+                    
                   </td>
                 </tr>
                 @endforeach
@@ -67,16 +83,20 @@
           </div>
         </div>
       </div>
+      <div class="w-25 p-3">
+        {{$posts->links()}}
+      </div>
     </div>
+
+    
     @endsection
 
     @section('scripts')
-    
   <!-- Page level plugins -->
   <script src="{{asset('vendor/datatables/jquery.dataTables.min.js')}}"></script>
   <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
   <!-- Page level custom scripts -->
-  <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+  {{-- <script src="{{asset('js/demo/datatables-demo.js')}}"></script> --}}
     @endsection
 </x-admin-master>
