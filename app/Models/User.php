@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'username',
+        'avatar',
     ];
 
     /**
@@ -49,6 +50,15 @@ class User extends Authenticatable
     {
         # code...
         $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function getAvatarAttribute($value)
+    {
+        # code...
+        if (strpos($value, 'https://')!==false || strpos($value, 'http://')!==false) {
+            return $value;
+        }
+        return asset('storage/'.$value);
     }
 
     public function posts()
