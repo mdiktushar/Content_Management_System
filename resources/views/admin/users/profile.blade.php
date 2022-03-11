@@ -6,7 +6,13 @@
                 <form action="" method="post" enctype="multipart/form-data">
                     @csrf
                     <div>
-                        <img src="" alt="" srcset="">
+                        <img 
+                            class="img-profile rounded-circle" 
+                            src="https://source.unsplash.com/QAB-WJcbgJk/60x60"
+                            height="100px"
+                            width="100px"
+                            style="margin-bottom: 20px"
+                        >
                     </div>
                     <div class="form-group">
                         <input type="file" name="" id="">
