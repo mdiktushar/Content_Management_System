@@ -10,6 +10,7 @@ Controller
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,4 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/post/create', [PostController::class, 'create'])->name('post.create');
     Route::post('/admin/post/save', [PostController::class, 'store'])->name('post.store');
     Route::get('/admin/posts', [PostController::class, 'index'])->name('post.index');
+
+
+    Route::get('admin/user/{user}/profile', [UsersController::class, 'show'])->name('user.profile.show');
 });
