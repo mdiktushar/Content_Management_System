@@ -10,6 +10,7 @@ Controller
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +35,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/post/create', [PostController::class, 'create'])->name('post.create');
     Route::post('/admin/post/save', [PostController::class, 'store'])->name('post.store');
     Route::get('/admin/posts', [PostController::class, 'index'])->name('post.index');
+
+    
     Route::delete('/admin/posts/{post}/distroy', [PostController::class, 'distroy'])->name('post.distroy');
     Route::get('/admin/posts/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
     Route::patch('/admin/posts/{post}/update', [PostController::class, 'update'])->name('post.update');
+
+
+
+    Route::get('admin/user/{user}/profile', [UsersController::class, 'show'])->name('user.profile.show');
+    Route::put('admin/user/{user}/update', [UsersController::class, 'update'])->name('user.profile.update');
+
+    Route::get('admin/users', [UsersController::class, 'index'])->name('users.index');
 });

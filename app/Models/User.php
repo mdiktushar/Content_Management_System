@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'username',
+        'avatar',
     ];
 
     /**
@@ -43,8 +45,48 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+    public function setPasswordAttribute($value)
+    {
+        # code...
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function getAvatarAttribute($value)
+    {
+        # code...
+        if (strpos($value, 'https://')!==false || strpos($value, 'http://')!==false) {
+            return $value;
+        }
+        return asset('storage/'.$value);
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function permissions(Type $var = null)
+    {
+        # code...
+        return $this->belongsToMany(Permission::class);
+    }
+    public function roles(Type $var = null)
+    {
+        # code...
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function userHasRole($role_name)
+    {
+        # code...
+        foreach ($this->roles as $role) {
+            # code...
+            if ($role_name == $role->name) {
+                # code...
+                return true;
+            }
+        }
+        return false;
     }
 }
