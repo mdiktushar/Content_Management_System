@@ -40,4 +40,12 @@ class UsersController extends Controller
         $users = User::all();
         return view('admin.users.index', ['users'=> $users]);
     }
+
+    public function distroy(User $user, Request $request)
+    {
+        # code...
+        $user->delete();
+        $request->session()->flash('user_delete', 'User has been deleted');
+        return back();
+    }
 }
