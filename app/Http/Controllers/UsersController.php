@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 // Models
 use App\Models\User;
+use App\Models\Role;
 
 class UsersController extends Controller
 {
@@ -13,7 +14,10 @@ class UsersController extends Controller
     public function show(User $user)
     {
         # code...
-        return view('admin.users.profile', ['user' => $user]);
+        return view('admin.users.profile', [
+            'user' => $user,
+            'roles' => Role::all(),
+        ]);
     }
 
     public function update(User $user)
@@ -46,6 +50,20 @@ class UsersController extends Controller
         # code...
         $user->delete();
         $request->session()->flash('user_delete', 'User has been deleted');
+        return back();
+    }
+
+    public function attach(User $user)
+    {
+        # code...
+        $user->roles()->attach(request('role'));
+        return back();
+    }
+
+    public function detach(User $user)
+    {
+        # code...
+        $user->roles()->detach(request('role'));
         return back();
     }
 }

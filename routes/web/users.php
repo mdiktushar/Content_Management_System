@@ -28,9 +28,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('admin/users/{user}/distroy', [UsersController::class, 'distroy'])->name('user.distroy');
 });
 
-Route::middleware('role:Admin')->group(function () {
+Route::middleware('role:Admin', 'auth')->group(function () {
     # code...
     Route::get('admin/users', [UsersController::class, 'index'])->name('users.index');
+    Route::put('/users/{user}/attach', [UsersController::class, 'attach'])->name('user.role.attach');
+    Route::put('/users/{user}/detach', [UsersController::class, 'detach'])->name('user.role.detach');
 });
 
 Route::middleware('can:view,user')->group(function () {
