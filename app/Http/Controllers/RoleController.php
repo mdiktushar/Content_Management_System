@@ -29,4 +29,12 @@ class RoleController extends Controller
         ]);
         return back();
     }
+
+    public function distroy(Request $request, Role $role)
+    {
+        # code...
+        $role->delete();
+        $request->session()->flash('role-delete', 'Deleted');
+        return back();
+    }
 }
