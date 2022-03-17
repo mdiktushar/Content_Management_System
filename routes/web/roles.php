@@ -27,3 +27,4 @@ use App\Http\Controllers\RoleController;
 Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
 Route::post('roles', [RoleController::class, 'store'])->name('role.store');
 Route::delete('roles\{role}\distroy', [RoleController::class, 'distroy'])->name('role.distroy');
+Route::get('roles\{role}\edit', [RoleController::class, 'edit'])->name('roles.edit');

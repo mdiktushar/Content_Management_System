@@ -30,6 +30,12 @@ class RoleController extends Controller
         return back();
     }
 
+    public function edit(Role $role)
+    {
+        # code...
+        return view('admin.roles.edit', ['role'=> $role]);
+    }
+
     public function distroy(Request $request, Role $role)
     {
         # code...
