@@ -43,4 +43,10 @@ class RoleController extends Controller
         $request->session()->flash('role-delete', 'Deleted');
         return back();
     }
+
+    public function update(Role $role)
+    {
+        # code...
+        dd($role);
+    }
 }

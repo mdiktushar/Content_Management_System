@@ -28,3 +28,4 @@ Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
 Route::post('roles', [RoleController::class, 'store'])->name('role.store');
 Route::delete('roles\{role}\distroy', [RoleController::class, 'distroy'])->name('role.distroy');
 Route::get('roles\{role}\edit', [RoleController::class, 'edit'])->name('roles.edit');
+Route::put('roles\{role}\update', [RoleController::class, 'update'])->name('roles.update');
