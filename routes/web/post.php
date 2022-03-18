@@ -23,9 +23,13 @@ use App\Http\Controllers\UsersController;
 |
 */
 Route::get('/post/{post}', [PostController::class, 'show'])->name('post');
-Route::get('/admin/post/create', [PostController::class, 'create'])->name('post.create');
-Route::post('/admin/post/save', [PostController::class, 'store'])->name('post.store');
-Route::get('/admin/posts', [PostController::class, 'index'])->name('post.index');
-Route::delete('/admin/posts/{post}/distroy', [PostController::class, 'distroy'])->name('post.distroy');
-Route::get('/admin/posts/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
-Route::patch('/admin/posts/{post}/update', [PostController::class, 'update'])->name('post.update');
+
+Route::middleware('auth')->group(function () {
+    # code...
+    Route::get('/admin/post/create', [PostController::class, 'create'])->name('post.create');
+    Route::post('/admin/post/save', [PostController::class, 'store'])->name('post.store');
+    Route::get('/admin/posts', [PostController::class, 'index'])->name('post.index');
+    Route::delete('/admin/posts/{post}/distroy', [PostController::class, 'distroy'])->name('post.distroy');
+    Route::get('/admin/posts/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+    Route::patch('/admin/posts/{post}/update', [PostController::class, 'update'])->name('post.update');
+});
