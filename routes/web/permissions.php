@@ -25,3 +25,7 @@ use App\Http\Controllers\RoleController;
 |
 */
 Route::get('permissions', [PermissionController::class, 'index'])->name('permissions.index');
+Route::post('permissions', [PermissionController::class, 'store'])->name('permissions.store');
+Route::delete('permissions/{permission}/distroy', [PermissionController::class, 'distroy'])->name('permission.distroy');
+Route::get('permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permission.edit');
+Route::put('permissions/{permission}/update', [PermissionController::class, 'update'])->name('permissions.update');
